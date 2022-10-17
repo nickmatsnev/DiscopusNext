@@ -7,12 +7,14 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import AppBar from '@mui/material/AppBar';
 import Image from 'next/image';
+import DiscopusLogo from '../DiscopusLogo';
 
 const Header = () => {
   return (
-    <Container sx={{marginBottom:10}} >
-       <AppBar position="fixed">
+    <Container sx={{marginBottom:10}}>
+       <AppBar position="fixed" color="transparent" enableColorOnDark>
         <Toolbar>            
+          <DiscopusLogo/>
           <Image
         src="/logo.png"
         layout="fixed"

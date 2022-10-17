@@ -4,21 +4,10 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Footer from '../../components/navigation/Footer';
-import { Box, Container } from '@mui/material';
-import Header from '../../components/navigation/Header';
+import {  Container } from '@mui/material';
 export default function SimpleAccordion() {
   return (
   <Container>
-    <Header /> 
-      <Box  mt={6}
-      ml={3}
-      mr={3}
-       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '90vh',
-      }}>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -47,8 +36,6 @@ export default function SimpleAccordion() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      </Box>
-      <Footer/>
       </Container>
   );
 }

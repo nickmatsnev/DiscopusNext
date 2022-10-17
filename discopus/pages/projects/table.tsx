@@ -6,9 +6,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Footer from '../../components/navigation/Footer';
-import Header from '../../components/navigation/Header';
-import {Container, Box} from '@mui/material';
 function createData(
   name: string,
   calories: number,
@@ -29,16 +26,6 @@ const rows = [
 
 export default function BasicTable() {
   return (
-    <Container>
-    <Header />
-    <Box mt={6}
-        ml={3}
-        mr={3}
-        sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '100vh',
-        }}>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -68,8 +55,5 @@ export default function BasicTable() {
         </TableBody>
       </Table>
     </TableContainer>
-    </Box>
-    <Footer/>
-    </Container>
   );
 }

@@ -5,7 +5,10 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
-
+import Header from '../components/navigation/Header';
+import { Box } from '@mui/material';
+import Footer from '../components/navigation/Footer';
+import CssBaseline from '@mui/material/CssBaseline';
 export default class MyDocument extends Document {
   render() {
     return (
@@ -20,7 +23,20 @@ export default class MyDocument extends Document {
           {(this.props as any).emotionStyleTags}
         </Head>
         <body>
+          
+    <Header /> 
+        <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '90vh',
+      }}
+    >
+      <CssBaseline />
+        
           <Main />
+    </Box>
+    <Footer />
           <NextScript />
         </body>
       </Html>

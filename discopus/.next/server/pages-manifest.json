@@ -2,10 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/projects/table": "pages/projects/table.js",
-  "/": "pages/index.js",
-  "/auth/login": "pages/auth/login.js",
-  "/about": "pages/about.js",
-  "/projects/grid": "pages/projects/grid.js",
-  "/auth/registerUser": "pages/auth/registerUser.js"
+  "/about": "pages/about.js"
 }

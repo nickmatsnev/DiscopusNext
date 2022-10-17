@@ -29,7 +29,7 @@ export default function Product() {
         </Typography>
       </CardContent>
       <CardActions>
-      <Link href="/projects/oneProduct" passHref><Button color="secondary" size="small">Learn More</Button></Link>
+      <Link href="/projects/oneProduct" passHref><Button color="primary" size="small">Learn More</Button></Link>
       </CardActions>
     </Card>
   );

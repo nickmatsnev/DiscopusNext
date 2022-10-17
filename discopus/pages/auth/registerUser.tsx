@@ -125,7 +125,6 @@ export default function SignUp() {
           </Box>
         </Box>
         <Box sx={{ mt: 8, mb: 8 }}>
-        <Footer />
         </Box>
       </Container>
     </ThemeProvider>
