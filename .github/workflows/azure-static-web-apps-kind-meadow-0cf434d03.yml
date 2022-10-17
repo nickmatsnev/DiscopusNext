@@ -14,13 +14,14 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
-    steps:
-      - name: Install Dependencies
-        run: sudo apt update && sudo pt install -y npm && npm install react-redux
-        
+    steps:  
       - uses: actions/checkout@v2
         with:
           submodules: true
+
+      - name: Install NPM Dependencies
+        run: sudo apt update && sudo apt install -y npm && npm install react-redux
+      
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
