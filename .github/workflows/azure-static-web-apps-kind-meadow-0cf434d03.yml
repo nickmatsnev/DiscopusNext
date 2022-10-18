@@ -19,8 +19,17 @@ jobs:
         with:
           submodules: true
 
-      - name: Install NPM Dependencies
-        run: sudo apt update && sudo apt install -y npm && npm install react-redux
+      - name: NPM or Yarn install with caching
+        # You may pin to the exact commit or the version.
+        # uses: bahmutov/npm-install@44b9e76df0949f3df6616b334af42e055ce24831
+        uses: bahmutov/npm-install@v1.6.0
+        with:
+          # Working directory to specify subfolder in which dependencies are defined
+          working-directory: ./discopus
+          # Option to enable or disable use of a lock file (package-lock.json/yarn.lock)
+          # useLockFile: # optional
+          # Custom install command to use
+          # install-command: # optional
       
       - name: Build And Deploy
         id: builddeploy
