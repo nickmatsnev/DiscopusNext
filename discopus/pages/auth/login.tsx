@@ -11,12 +11,28 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link'
-import Footer from '../../components/navigation/Footer';
-
+import type { NextApiResponse } from 'next'
+import { selectAuthState, setAuthState } from "../../../store/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const theme = createTheme();
 
-export default function SignIn() {
+type UserLogin = {
+  email: string
+  password: string
+}
+
+function loginHandler(
+  res: NextApiResponse<UserLogin>,
+  email:string,
+  password:string
+) {
+  res.status(200).json({ email: email, password: password })
+}
+
+export default function SignIn(res: NextApiResponse<UserLogin>) {
+  const authState = useSelector(selectAuthState);
+  const dispatch = useDispatch();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -24,6 +40,9 @@ export default function SignIn() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    var email =  " " + data.get('email')?.toString
+    var password =  " " + data.get('password')?.toString
+    loginHandler(res, email, password)
   };
 
   return (
@@ -76,6 +95,7 @@ export default function SignIn() {
               sx={{ mt: 3, mb: 2 }}
               color="primary"
             >
+            {authState ? "Logout" : "LogIn"}
               Sign In
             </Button>
             <Grid container>
@@ -96,8 +116,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              color="secondary"
-            >
+              color="secondary">
               Go back
             </Button>
             </Link>

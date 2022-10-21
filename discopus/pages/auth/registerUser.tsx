@@ -10,12 +10,28 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link'
-import Footer from '../../components/navigation/Footer';
+import type { NextApiResponse } from 'next'
 
+
+type UserRegister = {
+  name: string
+  surname: string
+  email: string
+  password: string
+}
 
 const theme = createTheme();
 
-export default function SignUp() {
+function loginHandler(
+  res: NextApiResponse<UserRegister>,
+  name: string,
+  surname: string,
+  email: string,
+  password: string,
+) {
+  res.status(200).json({ name: name, surname: surname, email: email, password: password })
+}
+export default function SignUp(res: NextApiResponse<UserRegister>) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -23,6 +39,11 @@ export default function SignUp() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    var email =  " " + data.get('email')?.toString
+    var password =  " " + data.get('password')?.toString
+    var name =  " " + data.get('name')?.toString
+    var surname =  " " + data.get('surname')?.toString
+    loginHandler(res, name, surname, email, password)
   };
 
   return (
