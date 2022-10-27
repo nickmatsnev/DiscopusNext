@@ -1,6 +1,13 @@
 import * as React from 'react';
 import Product from '../../components/cards/Product';
+import { GetStaticPaths } from 'next';
+export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
 
+  return {
+      paths: [], //indicates that no page needs be created at build time
+      fallback: 'blocking' //indicates the type of fallback
+  }
+}
 const singleProjectQuery = `*[_type == "project" && _id == $id] {
   _id,
   company_id,
