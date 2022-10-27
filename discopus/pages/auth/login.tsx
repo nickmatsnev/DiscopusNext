@@ -11,20 +11,61 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link'
-import Footer from '../../components/navigation/Footer';
-
+import type { NextApiResponse } from 'next'
+import { selectAuthState, setAuthState } from "../../store/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const theme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+type UserLogin = {
+  email: string
+  password: string
+}
+
+function loginHandler(
+  res: NextApiResponse<UserLogin>,
+  email:string,
+  password:string
+) {
+  res.status(200).json({ email: email, password: password })
+}
+
+export default function SignIn(res: NextApiResponse<UserLogin>) {
+  const authState = useSelector(selectAuthState);
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [data, setData] = React.useState(null)
+  const [isLoading, setLoading] = React.useState(false)
+
+  const handleChange = (fieldName: keyof UserLogin) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (fieldName == 'email'){
+      setEmail(e.currentTarget.value);
+    }else if(fieldName == 'password'){
+      setPassword(e.currentTarget.value);
+    }
   };
+
+  React.useEffect(() => {
+    setLoading(true)
+    fetch('/express/api')
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+        setLoading(false)
+      })
+  }, [])
+
+  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!email.includes("@") || !email.includes(".") || email.indexOf("@") > email.lastIndexOf(".")){
+      alert(" you fucked up. again. ")
+    }else{
+    alert("this email was sent: " + email);
+    // here we send data to express
+    e.preventDefault;
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -54,6 +95,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleChange("email")}
             />
             <TextField
               margin="normal"
@@ -64,18 +106,27 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange("password")}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            <div>{authState ? "Logged in" : "Not Logged In"}</div>
+    
             <Button
+            onClick={() =>
+              (authState && email != "" && password != "")
+                ? dispatch(setAuthState(false))
+                : dispatch(setAuthState(true))
+            }
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               color="primary"
             >
+            
               Sign In
             </Button>
             <Grid container>
@@ -96,8 +147,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              color="secondary"
-            >
+              color="secondary">
               Go back
             </Button>
             </Link>
