@@ -38,6 +38,9 @@ export default function SignUp(res: NextApiResponse<UserRegister>) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [password1, setPassword1] = React.useState("");
+  const [data, setData] = React.useState(null);
+  const [isLoading, setLoading] = React.useState(false);
+
 
   const handleChange = (fieldName: keyof UserRegister) => (e: React.ChangeEvent<HTMLInputElement>) => {
       //setEmail(e.currentTarget.value);
@@ -59,6 +62,16 @@ export default function SignUp(res: NextApiResponse<UserRegister>) {
     }
   };
 
+  React.useEffect(() => {
+    setLoading(true)
+    fetch('/express/api')
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+        setLoading(false)
+      })
+  }, [])
+  
   const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!email.includes("@") || 
     !email.includes(".") || 

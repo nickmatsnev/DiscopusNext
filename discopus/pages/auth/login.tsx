@@ -36,6 +36,8 @@ export default function SignIn(res: NextApiResponse<UserLogin>) {
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [data, setData] = React.useState(null)
+  const [isLoading, setLoading] = React.useState(false)
 
   const handleChange = (fieldName: keyof UserLogin) => (e: React.ChangeEvent<HTMLInputElement>) => {
     if (fieldName == 'email'){
@@ -44,6 +46,16 @@ export default function SignIn(res: NextApiResponse<UserLogin>) {
       setPassword(e.currentTarget.value);
     }
   };
+
+  React.useEffect(() => {
+    setLoading(true)
+    fetch('/express/api')
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+        setLoading(false)
+      })
+  }, [])
 
   const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!email.includes("@") || !email.includes(".") || email.indexOf("@") > email.lastIndexOf(".")){
