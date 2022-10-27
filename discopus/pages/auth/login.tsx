@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link'
 import type { NextApiResponse } from 'next'
-import { selectAuthState, setAuthState } from "../../../store/authSlice";
+import { selectAuthState, setAuthState } from "../../store/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const theme = createTheme();
@@ -33,17 +33,27 @@ function loginHandler(
 export default function SignIn(res: NextApiResponse<UserLogin>) {
   const authState = useSelector(selectAuthState);
   const dispatch = useDispatch();
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    var email =  " " + data.get('email')?.toString
-    var password =  " " + data.get('password')?.toString
-    loginHandler(res, email, password)
+
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const handleChange = (fieldName: keyof UserLogin) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (fieldName == 'email'){
+      setEmail(e.currentTarget.value);
+    }else if(fieldName == 'password'){
+      setPassword(e.currentTarget.value);
+    }
   };
+
+  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!email.includes("@") || !email.includes(".") || email.indexOf("@") > email.lastIndexOf(".")){
+      alert(" you fucked up. again. ")
+    }else{
+    alert("this email was sent: " + email);
+    // here we send data to express
+    e.preventDefault;
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -73,6 +83,7 @@ export default function SignIn(res: NextApiResponse<UserLogin>) {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleChange("email")}
             />
             <TextField
               margin="normal"
@@ -83,19 +94,27 @@ export default function SignIn(res: NextApiResponse<UserLogin>) {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange("password")}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            <div>{authState ? "Logged in" : "Not Logged In"}</div>
+    
             <Button
+            onClick={() =>
+              (authState && email != "" && password != "")
+                ? dispatch(setAuthState(false))
+                : dispatch(setAuthState(true))
+            }
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               color="primary"
             >
-            {authState ? "Logout" : "LogIn"}
+            
               Sign In
             </Button>
             <Grid container>

@@ -22,7 +22,7 @@ type UserRegister = {
 
 const theme = createTheme();
 
-function loginHandler(
+function registerHandler(
   res: NextApiResponse<UserRegister>,
   name: string,
   surname: string,
@@ -31,20 +31,48 @@ function loginHandler(
 ) {
   res.status(200).json({ name: name, surname: surname, email: email, password: password })
 }
+
 export default function SignUp(res: NextApiResponse<UserRegister>) {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    var email =  " " + data.get('email')?.toString
-    var password =  " " + data.get('password')?.toString
-    var name =  " " + data.get('name')?.toString
-    var surname =  " " + data.get('surname')?.toString
-    loginHandler(res, name, surname, email, password)
+  const [name, setName] = React.useState("");
+  const [surname, setSurname] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [password1, setPassword1] = React.useState("");
+
+  const handleChange = (fieldName: keyof UserRegister) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      //setEmail(e.currentTarget.value);
+    switch (fieldName){
+      case 'name':
+        setName(e.currentTarget.value);
+        break;
+      case 'email':
+        setEmail(e.currentTarget.value);
+        break;
+      case 'surname':
+        setSurname(e.currentTarget.value);
+        break;
+      case 'password':
+        setPassword(e.currentTarget.value);
+        break;
+      default:
+        break;
+    }
   };
+
+  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!email.includes("@") || 
+    !email.includes(".") || 
+    email.indexOf("@") > email.lastIndexOf(".") ||
+    password.length < 8 || 
+    password.toLowerCase() == password ||
+    password != password1){
+      alert(" you fucked up. again. ")
+    }else{
+    alert("this account is being registered: " + email);
+    // here we send data to express
+    e.preventDefault;
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -74,6 +102,7 @@ export default function SignUp(res: NextApiResponse<UserRegister>) {
               name="name"
               autoComplete="name"
               autoFocus
+              onChange={handleChange("name")}
             />
             <TextField
               margin="normal"
@@ -84,6 +113,7 @@ export default function SignUp(res: NextApiResponse<UserRegister>) {
               name="surname"
               autoComplete="surname"
               autoFocus
+              onChange={handleChange("surname")}
             />
             <TextField
               margin="normal"
@@ -94,6 +124,7 @@ export default function SignUp(res: NextApiResponse<UserRegister>) {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleChange("email")}
             />
             <TextField
               margin="normal"
@@ -104,6 +135,7 @@ export default function SignUp(res: NextApiResponse<UserRegister>) {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange("password")}
             />
             <TextField
               margin="normal"
