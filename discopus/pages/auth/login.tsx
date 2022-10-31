@@ -12,9 +12,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link'
 import type { NextApiResponse } from 'next'
-import { selectAuthState, setAuthState } from "../../store/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import { selectAuthState, setAuthState } from '../../store/authSlice';
 const theme = createTheme();
 
 type UserLogin = {
