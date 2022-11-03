@@ -4,11 +4,15 @@ import { HYDRATE } from "next-redux-wrapper";
 // Type for our state
 export interface AuthState {
   authState: boolean;
+  email: string;
+  password: string;
 }
 
 // Initial state
 const initialState: AuthState = {
   authState: false,
+  email: "noe@ema.il",
+  password: "nopassword"
 };
 
 // Actual Slice
@@ -21,11 +25,19 @@ export const authSlice = createSlice({
     setAuthState(state, action) {
       state.authState = action.payload;
     },
+    setEmailState(state, action) {
+      state.email = action.payload;
+    },
+    setPasswordState(state, action) {
+      state.password = action.payload;
+    },
   },
 });
 
-export const { setAuthState } = authSlice.actions;
+export const { setAuthState, setEmailState, setPasswordState } = authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth.authState;
+export const selectEmailState = (state: AppState) => state.auth.email;
+export const selectPasswordState = (state: AppState) => state.auth.password;
 
 export default authSlice.reducer;

@@ -32,30 +32,16 @@ function registerHandler(
   res.status(200).json({ name: name, surname: surname, email: email, password: password })
 }
 
-export default function SignUp(res: NextApiResponse<UserRegister>) {
+export default function SignUpUni(res: NextApiResponse<UserRegister>) {
   const [name, setName] = React.useState("");
-  const [surname, setSurname] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [password1, setPassword1] = React.useState("");
   const [data, setData] = React.useState(null);
   const [isLoading, setLoading] = React.useState(false);
-
 
   const handleChange = (fieldName: keyof UserRegister) => (e: React.ChangeEvent<HTMLInputElement>) => {
       //setEmail(e.currentTarget.value);
     switch (fieldName){
       case 'name':
         setName(e.currentTarget.value);
-        break;
-      case 'email':
-        setEmail(e.currentTarget.value);
-        break;
-      case 'surname':
-        setSurname(e.currentTarget.value);
-        break;
-      case 'password':
-        setPassword(e.currentTarget.value);
         break;
       default:
         break;
@@ -73,18 +59,7 @@ export default function SignUp(res: NextApiResponse<UserRegister>) {
   }, [])
   
   const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!email.includes("@") || 
-    !email.includes(".") || 
-    email.indexOf("@") > email.lastIndexOf(".") ||
-    password.length < 8 || 
-    password.toLowerCase() == password ||
-    password != password1){
-      alert(" you fucked up. again. ")
-    }else{
-    alert("this account is being registered: " + email);
-    // here we send data to express
-    e.preventDefault;
-    }
+   
   }
 
   return (
@@ -117,53 +92,6 @@ export default function SignUp(res: NextApiResponse<UserRegister>) {
               autoFocus
               onChange={handleChange("name")}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="surname"
-              label="Фамилия"
-              name="surname"
-              autoComplete="surname"
-              autoFocus
-              onChange={handleChange("surname")}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Электронная почта"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={handleChange("email")}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Пароль"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={handleChange("password")}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="rPassword"
-              label="Повторите пароль"
-              type="password"
-              id="rPassword"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Запомнить меня"
-            />
             <Link href="/auth/registerUserFull" passHref>
             <Button
               type="submit"
@@ -172,11 +100,9 @@ export default function SignUp(res: NextApiResponse<UserRegister>) {
               sx={{ mt: 3, mb: 2 }}
               color="primary"
             >
-              Sign In
+              Логин
             </Button></Link>
-                <Link href="/auth/login">
-                  {"Уже есть аккаунт? Войдите"}
-                </Link>
+            
             <Link href="/" passHref>
             <Button
               type="submit"
@@ -185,7 +111,7 @@ export default function SignUp(res: NextApiResponse<UserRegister>) {
               sx={{ mt: 3, mb: 2 }}
               color="secondary"
             >
-              Go back
+              Назад
             </Button>
             </Link>
           </Box>

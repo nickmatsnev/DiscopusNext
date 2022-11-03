@@ -30,9 +30,9 @@ const Home: NextPage = () => {
       </button>
     </div>
         <Typography variant="h5" component="h2" gutterBottom>
-          {'Something about us.'}
+          {'Что то о нас.'}
         </Typography>
-        <Typography variant="body1">Something about us Something about us Something about us Something about us Something about us Something about us.</Typography>
+        <Typography variant="body1">Что то о нас Что то о нас Что то о нас Что то о нас Что то о нас Что то о нас Что то о нас Что то о нас Что то о нас Что то о нас Что то о нас Что то о нас .</Typography>
       </Container>
       
   );

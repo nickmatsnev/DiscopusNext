@@ -12,15 +12,24 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link'
 import type { NextApiResponse } from 'next'
-import { selectAuthState, setAuthState } from "../../store/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import { selectAuthState, setAuthState } from '../../store/authSlice';
 const theme = createTheme();
 
 type UserLogin = {
   email: string
   password: string
 }
+
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`https://.../data`)
+  const data = await res.json()
+
+  // Pass data to the page via props
+  return { props: { data } }
+}
+// data should be from usermodel of backend
 
 function loginHandler(
   res: NextApiResponse<UserLogin>,
@@ -85,13 +94,13 @@ export default function SignIn(res: NextApiResponse<UserLogin>) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Электронная почта"
               name="email"
               autoComplete="email"
               autoFocus
@@ -102,7 +111,7 @@ export default function SignIn(res: NextApiResponse<UserLogin>) {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Пароль"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -110,7 +119,7 @@ export default function SignIn(res: NextApiResponse<UserLogin>) {
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="Запомнить меня"
             />
             <div>{authState ? "Logged in" : "Not Logged In"}</div>
     
