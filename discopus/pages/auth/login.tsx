@@ -21,6 +21,16 @@ type UserLogin = {
   password: string
 }
 
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`https://.../data`)
+  const data = await res.json()
+
+  // Pass data to the page via props
+  return { props: { data } }
+}
+// data should be from usermodel of backend
+
 function loginHandler(
   res: NextApiResponse<UserLogin>,
   email:string,
@@ -90,7 +100,7 @@ export default function SignIn(res: NextApiResponse<UserLogin>) {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Электронная почта"
               name="email"
               autoComplete="email"
               autoFocus
@@ -101,7 +111,7 @@ export default function SignIn(res: NextApiResponse<UserLogin>) {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Пароль"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -109,7 +119,7 @@ export default function SignIn(res: NextApiResponse<UserLogin>) {
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="Запомнить меня"
             />
             <div>{authState ? "Logged in" : "Not Logged In"}</div>
     
