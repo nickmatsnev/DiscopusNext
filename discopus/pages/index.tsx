@@ -1,14 +1,17 @@
 // pages/index.tsx
 import * as React from 'react';
-import type { NextPage } from 'next';
+import type { NextPage, NextPageContext } from 'next';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { selectAuthState, setAuthState } from "../store/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { handleAuth } from './utils/auth'
 
 const Home: NextPage = () => {
+  
   const authState = useSelector(selectAuthState);
   const dispatch = useDispatch();
+  
   //  /**  <Header />  We would pass the type of the user to show different */
   // we need to put header, footer and the forming container in the _document to make it similar for everything
   return (
@@ -37,5 +40,9 @@ const Home: NextPage = () => {
       
   );
 };
+Home.getInitialProps = async (ctx: any) => {
+  const res = await handleAuth(ctx)
+  return{ log: 'waiting', response:res}
+}
 
 export default Home;

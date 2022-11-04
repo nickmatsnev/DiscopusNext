@@ -10,189 +10,210 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link'
-import type { NextApiResponse } from 'next'
+import { Cookies } from 'react-cookie'
 
+import { register } from '../utils/auth'
+import axios from 'axios';
 
-type UserRegister = {
-  name: string
-  surname: string
+enum UserRoleID {
+  admin = 1,
+  student,
+  companyRepresentative,
+  universityRepresentative
+}
+interface MyProps{
+  firstName: string
+  lastName: string
   email: string
   password: string
+  role_id: UserRoleID
+  username: string
+  contacts?: Record<string, string>
+  avatar_url?: string
+}
+interface RegState{
+  token: any
+  error: any
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  rPassword: string
+  role_id: UserRoleID
+  username: string
+  contacts?: Record<string, string>
+  avatar_url?: string
 }
 
 const theme = createTheme();
 
-function registerHandler(
-  res: NextApiResponse<UserRegister>,
-  name: string,
-  surname: string,
-  email: string,
-  password: string,
-) {
-  res.status(200).json({ name: name, surname: surname, email: email, password: password })
-}
+const cookies = new Cookies()
 
-export default function SignUp(res: NextApiResponse<UserRegister>) {
-  const [name, setName] = React.useState("");
-  const [surname, setSurname] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [password1, setPassword1] = React.useState("");
-  const [data, setData] = React.useState(null);
-  const [isLoading, setLoading] = React.useState(false);
-
-
-  const handleChange = (fieldName: keyof UserRegister) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      //setEmail(e.currentTarget.value);
-    switch (fieldName){
-      case 'name':
-        setName(e.currentTarget.value);
-        break;
-      case 'email':
-        setEmail(e.currentTarget.value);
-        break;
-      case 'surname':
-        setSurname(e.currentTarget.value);
-        break;
-      case 'password':
-        setPassword(e.currentTarget.value);
-        break;
-      default:
-        break;
-    }
-  };
-
-  React.useEffect(() => {
-    setLoading(true)
-    fetch('/express/api')
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data)
-        setLoading(false)
-      })
-  }, [])
-  
-  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!email.includes("@") || 
-    !email.includes(".") || 
-    email.indexOf("@") > email.lastIndexOf(".") ||
-    password.length < 8 || 
-    password.toLowerCase() == password ||
-    password != password1){
-      alert(" you fucked up. again. ")
-    }else{
-    alert("this account is being registered: " + email);
-    // here we send data to express
-    e.preventDefault;
-    }
+export default class SignUp extends React.Component<MyProps, RegState> {
+  constructor(props:MyProps) {
+    super(props)
+    this.state = {
+      token: cookies.get('token') || null,
+      error: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      rPassword:'',
+      role_id: 2,
+      username: '',
+      contacts: undefined,
+      avatar_url: ''
+      }
   }
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            D
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-             <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Имя"
-              name="name"
-              autoComplete="name"
-              autoFocus
-              onChange={handleChange("name")}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="surname"
-              label="Фамилия"
-              name="surname"
-              autoComplete="surname"
-              autoFocus
-              onChange={handleChange("surname")}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Электронная почта"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={handleChange("email")}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Пароль"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={handleChange("password")}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="rPassword"
-              label="Повторите пароль"
-              type="password"
-              id="rPassword"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Запомнить меня"
-            />
-            <Link href="/auth/registerUserFull" passHref>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              color="primary"
-            >
-              Sign In
-            </Button></Link>
-                <Link href="/auth/login">
-                  {"Уже есть аккаунт? Войдите"}
-                </Link>
-            <Link href="/" passHref>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              color="secondary"
-            >
-              Go back
-            </Button>
-            </Link>
+  onInputChange = (e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => { // should be Event 
+    this.setState({...this.state, [e.currentTarget.name ] : e.currentTarget.value})
+  }
+  onRegClick = async(e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
+      const config = {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        }
+      };
+      const { firstName, lastName, email, password, role_id, username} = this.state
+      const url: string = 'http://localhost:4000/api/users/register'
+      const response = await axios.post(url, {
+        firstName, lastName, email, password, role_id, username
+      }, config)
+      const { token } = response.data
+      console.log(response.data.firstName)
+      await register({token})
+      this.setState({
+        token,
+        error:''
+      })
+    } catch(error) {
+      console.error('error happened', error)
+      this.setState({error:error})
+    }
+  }
+  render(): React.ReactNode {
+    return (
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              D
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
+            {!this.state.token && (<Box component="form" onSubmit={this.onRegClick} sx={{ mt: 1 }}>
+               <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="firstName"
+                label="Имя"
+                name="firstName"
+                autoComplete="firstName"
+                autoFocus
+                onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e) }
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="lastName"
+                label="Фамилия"
+                name="lastName"
+                autoComplete="lastName"
+                autoFocus
+                onChange={ (e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e) }
+              />
+                <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Кличка"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                onChange={this.onInputChange}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Электронная почта"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Пароль"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="rPassword"
+                label="Повторите пароль"
+                type="password"
+                id="rPassword"
+                autoComplete="current-password"
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Запомнить меня"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                color="primary"
+              >
+                Sign In
+              </Button>
+                  <Link href="/auth/login">
+                    {"Уже есть аккаунт? Войдите"}
+                  </Link>
+              <Link href="/" passHref>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                color="secondary"
+              >
+                Go back
+              </Button>
+              </Link>
+            </Box>)}
           </Box>
-        </Box>
-        <Box sx={{ mt: 8, mb: 8 }}>
-        </Box>
-      </Container>
-    </ThemeProvider>
-  );
+          <Box sx={{ mt: 8, mb: 8 }}>
+          </Box>
+        </Container>
+      </ThemeProvider>
+    );
+  }
 }
