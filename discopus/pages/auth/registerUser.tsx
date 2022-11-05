@@ -81,11 +81,22 @@ export default class SignUp extends React.Component<MyProps, RegState> {
       };
       const { firstName, lastName, email, password, role_id, username} = this.state
       const url: string = 'http://localhost:4000/api/users/register'
-      const response = await axios.post(url, {
-        firstName, lastName, email, password, role_id, username
-      }, config)
-      const { token } = response.data
-      console.log(response.data.firstName)
+      const objectDto: MyProps = { 
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        role_id: this.state.role_id,
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password}
+      console.log(objectDto)
+      const response = await fetch('http://localhost:4000/api/users/register',{
+        method:'POST',
+        mode:'cors',
+        body: JSON.stringify(objectDto)
+      })
+      const data=await response.json();
+      const { token } = data
+      console.log(data.firstName)
       await register({token})
       this.setState({
         token,
