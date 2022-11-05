@@ -73,14 +73,6 @@ export default class SignUp extends React.Component<MyProps, RegState> {
   onRegClick = async(e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const config = {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-        }
-      };
-      const { firstName, lastName, email, password, role_id, username} = this.state
-      const url: string = 'http://localhost:4000/api/users/register'
       const objectDto: MyProps = { 
         firstName: this.state.firstName,
         lastName: this.state.lastName,
@@ -88,16 +80,24 @@ export default class SignUp extends React.Component<MyProps, RegState> {
         username: this.state.username,
         email: this.state.email,
         password: this.state.password}
+
+
       console.log(objectDto)
+
+
       const response = await fetch('http://localhost:4000/api/users/register',{
         method:'POST',
         mode:'cors',
         body: JSON.stringify(objectDto)
       })
-      const data=await response.json();
+      const data = await response.json();
+
       const { token } = data
+      
       console.log(data.firstName)
+      
       await register({token})
+      
       this.setState({
         token,
         error:''
