@@ -65,38 +65,38 @@ export default function SignUpFull() {
               margin="normal"
               required
               fullWidth
-              id="email"
+              id="phone"
               label="Номер телефона"
-              name="email"
-              autoComplete="email"
+              name="phone"
+              autoComplete="phone"
               autoFocus
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="university"
               label="Университет"
-              id="password"
-              autoComplete="current-password"
+              id="university"
+              autoComplete="university"
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="rPassword"
+              name="faculty"
               label="Факультет"
-              id="rPassword"
-              autoComplete="current-password"
+              id="faculty"
+              autoComplete="faculty"
             />            
             <TextField
               margin="normal"
               required
               fullWidth
-              name="rPassword"
+              name="teacherName"
               label="Имя преподавателя"
-              id="rPassword"
-              autoComplete="current-password"
+              id="teacherName"
+              autoComplete="teacherName"
             />       
                <TextField
           id="outlined-multiline-flexible"
@@ -104,8 +104,8 @@ export default function SignUpFull() {
           multiline
           fullWidth
           maxRows={4}
-          name="rPassword"
-          autoComplete="current-password"
+          name="curriculumVitae"
+          autoComplete="curriculumVitae"
         />
          
             <Button
