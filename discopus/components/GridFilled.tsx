@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import Product from './cards/Product';
+import Product from './cards/Project';
 
 
 export default function GridFilled(){

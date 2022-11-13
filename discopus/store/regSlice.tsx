@@ -36,9 +36,5 @@ const regSlice = createSlice({
 })
 
 export const { setName, setSurname, setEmail, setPassword } = regSlice.actions
-export const selectEmailState = (state: AppState) => state.reg.email;
-export const selectNameState = (state: AppState) => state.reg.email;
-export const selectSurnameState = (state: AppState) => state.reg.email;
-export const selectPasswordState = (state: AppState) => state.reg.password;
 
 export default regSlice.reducer

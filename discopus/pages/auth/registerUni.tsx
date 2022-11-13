@@ -13,36 +13,14 @@ import Link from 'next/link'
 import { Cookies } from 'react-cookie'
 
 import { register } from '../utils/auth'
-import axios from 'axios';
 
-enum UserRoleID {
-  admin = 1,
-  student,
-  companyRepresentative,
-  universityRepresentative
-}
 interface MyProps{
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  role_id: UserRoleID
-  username: string
-  contacts?: Record<string, string>
-  avatar_url?: string
+  name: string
 }
 interface RegState{
   token: any
   error: any
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  rPassword: string
-  role_id: UserRoleID
-  username: string
-  contacts?: Record<string, string>
-  avatar_url?: string
+  name:string
 }
 
 const theme = createTheme();
@@ -55,15 +33,7 @@ export default class SignUp extends React.Component<MyProps, RegState> {
     this.state = {
       token: cookies.get('token') || null,
       error: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      rPassword:'',
-      role_id: 2,
-      username: '',
-      contacts: undefined,
-      avatar_url: ''
+      name: ''
       }
   }
 
@@ -74,18 +44,13 @@ export default class SignUp extends React.Component<MyProps, RegState> {
     e.preventDefault()
     try {
       const objectDto: MyProps = { 
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        role_id: this.state.role_id,
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password}
+        name: this.state.name}
 
 
       console.log(objectDto)
 
 
-      const response = await fetch('http://localhost:4000/api/users/register',{
+      const response = await fetch('http://localhost:4000/api/universities/register',{
         method:'POST',
         mode:'cors',
         body: JSON.stringify(objectDto)
@@ -131,67 +96,14 @@ export default class SignUp extends React.Component<MyProps, RegState> {
                 margin="normal"
                 required
                 fullWidth
-                id="firstName"
+                id="name"
                 label="Имя"
-                name="firstName"
-                autoComplete="firstName"
+                name="name"
+                autoComplete="name"
                 autoFocus
                 onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e) }
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="lastName"
-                label="Фамилия"
-                name="lastName"
-                autoComplete="lastName"
-                autoFocus
-                onChange={ (e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e) }
-              />
-                <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Кличка"
-                name="username"
-                autoComplete="username"
-                autoFocus
-                onChange={this.onInputChange}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Электронная почта"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Пароль"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="rPassword"
-                label="Повторите пароль"
-                type="password"
-                id="rPassword"
-                autoComplete="current-password"
-              />
+               
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Запомнить меня"
@@ -206,9 +118,6 @@ export default class SignUp extends React.Component<MyProps, RegState> {
                 Sign In
               </Button>
                   <Link href="/auth/login">
-                    {"Уже есть аккаунт? Войдите"}
-                  </Link>
-                  <Link href="/auth/registerUni">
                     {"Уже есть аккаунт? Войдите"}
                   </Link>
               <Link href="/" passHref>

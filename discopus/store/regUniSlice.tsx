@@ -26,5 +26,4 @@ export const regUniSlice = createSlice({
 
 export const { setName } = regUniSlice.actions;
 
-export const selectName = (state: AppState) => state.reguni.name;
 export default regUniSlice.reducer;
