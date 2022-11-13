@@ -11,9 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link'
 import { Cookies } from 'react-cookie'
-
 import { register } from '../utils/auth'
-import axios from 'axios';
 
 enum UserRoleID {
   admin = 1,
@@ -81,12 +79,14 @@ export default class SignUp extends React.Component<MyProps, RegState> {
         email: this.state.email,
         password: this.state.password}
 
-
       console.log(objectDto)
-
 
       const response = await fetch('http://localhost:4000/api/users/register',{
         method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
         mode:'cors',
         body: JSON.stringify(objectDto)
       })
