@@ -208,9 +208,6 @@ export default class SignUp extends React.Component<MyProps, RegState> {
                   <Link href="/auth/login">
                     {"Уже есть аккаунт? Войдите"}
                   </Link>
-                  <Link href="/auth/registerUni">
-                    {"Уже есть аккаунт? Войдите"}
-                  </Link>
               <Link href="/" passHref>
               <Button
                 type="submit"

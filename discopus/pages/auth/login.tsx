@@ -5,166 +5,159 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link'
-import type { NextApiResponse } from 'next'
-import { useDispatch, useSelector } from "react-redux";
-import { selectAuthState, setAuthState } from '../../store/authSlice';
+import { Cookies } from 'react-cookie'
+
+import { handleAuth, register } from '../utils/auth'
+import axios from 'axios';
+
+enum UserRoleID {
+  admin = 1,
+  student,
+  companyRepresentative,
+  universityRepresentative
+}
+interface MyProps{
+  email: string
+  //password: string
+}
+interface LoginState{
+  token: any
+  error: any
+  email: string
+  //password: string
+}
+
 const theme = createTheme();
 
-type UserLogin = {
-  email: string
-  password: string
-}
+const cookies = new Cookies();
 
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`https://.../data`)
-  const data = await res.json()
-
-  // Pass data to the page via props
-  return { props: { data } }
-}
-// data should be from usermodel of backend
-
-function loginHandler(
-  res: NextApiResponse<UserLogin>,
-  email:string,
-  password:string
-) {
-  res.status(200).json({ email: email, password: password })
-}
-
-export default function SignIn(res: NextApiResponse<UserLogin>) {
-  const authState = useSelector(selectAuthState);
-  const dispatch = useDispatch();
-
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [data, setData] = React.useState(null)
-  const [isLoading, setLoading] = React.useState(false)
-
-  const handleChange = (fieldName: keyof UserLogin) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (fieldName == 'email'){
-      setEmail(e.currentTarget.value);
-    }else if(fieldName == 'password'){
-      setPassword(e.currentTarget.value);
-    }
-  };
-
-  React.useEffect(() => {
-    setLoading(true)
-    fetch('/express/api')
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data)
-        setLoading(false)
-      })
-  }, [])
-
-  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!email.includes("@") || !email.includes(".") || email.indexOf("@") > email.lastIndexOf(".")){
-      alert(" you fucked up. again. ")
-    }else{
-    alert("this email was sent: " + email);
-    // here we send data to express
-    e.preventDefault;
-    }
+export default class SignIn extends React.Component<MyProps, LoginState> {
+  constructor(props:MyProps) {
+    super(props)
+    this.state = {
+      token: cookies.get('token') || null,
+      error: '',
+      email: ''
+      }
   }
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            D
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Электронная почта"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={handleChange("email")}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Пароль"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={handleChange("password")}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Запомнить меня"
-            />
-            <div>{authState ? "Logged in" : "Not Logged In"}</div>
-    
-            <Button
-            onClick={() =>
-              (authState && email != "" && password != "")
-                ? dispatch(setAuthState(false))
-                : dispatch(setAuthState(true))
-            }
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              color="primary"
-            >
-            
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/auth/registerUser">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-            <Link href="/" passHref>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              color="secondary">
-              Go back
-            </Button>
-            </Link>
+  onInputChange = (e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => { // should be Event 
+    this.setState({...this.state, [e.currentTarget.name ] : e.currentTarget.value})
+  }
+  onLoginClick = async(e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
+      const objectDto: MyProps = { 
+        email: this.state.email}
+
+
+      console.log(objectDto)
+
+
+      const response = await fetch('http://localhost:4000/api/users/login',{
+        method:'POST',
+        mode:'cors',
+        body: JSON.stringify(objectDto)
+      })
+      const data = await response.json();
+
+      const { token } = data
+      
+      //console.log(data.firstName)
+      
+      await register({token})
+      
+      this.setState({
+        token,
+        error:''
+      })
+    } catch(error) {
+      console.error('error happened', error)
+      this.setState({error:error})
+    }
+      
+
+  }
+  render(): React.ReactNode {
+    return (
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              D
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            {!this.state.token && (<Box component="form" onSubmit={this.onLoginClick} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Электронная почта"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Пароль"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e)}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Запомнить меня"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                color="primary"
+              >
+                Sign In
+              </Button>
+                  <Link href="/auth/registeкUser">
+                    {"Нет аккаунта? Зарегестрируйтесь"}
+                  </Link>
+              <Link href="/" passHref>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                color="secondary"
+              >
+                Go back
+              </Button>
+              </Link>
+            </Box>)}
           </Box>
-        </Box>
-        <Box sx={{ mt: 8, mb: 8 }}>
-        </Box>
-      </Container>
-    </ThemeProvider>
-  );
+          <Box sx={{ mt: 8, mb: 8 }}>
+          </Box>
+        </Container>
+      </ThemeProvider>
+    );
+  }
 }
