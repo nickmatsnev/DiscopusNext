@@ -8,7 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
-import { wrapper } from "../store/store";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -33,4 +32,4 @@ function MyApp(props: MyAppProps) {
   );
 }
 
-export default wrapper.withRedux(MyApp);
+export default MyApp;
