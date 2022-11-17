@@ -6,83 +6,72 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {TaskDto} from "./DTO";
 
-enum Importance {
-    Low = 0,
-    Medium = 1,
-    High = 2
-  }
-export type TaskDto = {
-    title: string,
-    description: string,
-    tags: string[],
-    importance: Importance,
-    status: string,
-    timeStart: string,
-    timeEnd: string,
-    studentIDs: string[],
-    SLA: string,
-  }
-function createData(
-    title: string,
-    description: string,
-    tags: string[],
-    importance: Importance,
-    status: string,
-    timeStart: string,
-    timeEnd: string,
-    studentIDs: string[],
-    SLA: string,
-) {
-  return { title, 
-    description, 
-    tags, 
-    importance, 
-    status,
-     timeStart, 
-     timeEnd, 
-     studentIDs,
-     SLA};
-}
-function AllTasks() {
-    //const [data, setData] = React.useState(null)
-    //const [isLoading, setLoading] = React.useState(false)
-    // когда добавите таски в скл тогда и раскомментим
-    //React.useEffect(() => {
-    //    setLoading(true)
-    //    fetch('http://localhost:4000/api/tasks/getAll')
-    //    .then((res) => res.json())
-    //    .then((data) => {
-    //        setData(data)
-    //        setLoading(false)
-    //    })
-   // }, [])
-    const data:TaskDto[] = [{
-        title: "title",
-        description: "description",
-        tags: ["bug", "easy"],
-        importance: 2,
-        status: "solved",
-        timeStart: "11/22/2022",
-        timeEnd: "11/23/2022",
-        studentIDs: ["1","2"],
-        SLA: "2 hours",
-      },{
-        title: "title2",
-        description: "description",
-        tags: ["bug", "hard"],
-        importance: 2,
-        status: "in process",
-        timeStart: "11/22/2022",
-        timeEnd: "11/23/2022",
-        studentIDs: ["1","2"],
-        SLA: "2 hours",
-      }]
-    
-  
+
+// function createData(
+//   title: string,
+//   description: string,
+//   tags: string[],
+//   importance: Importance,
+//   status: string,
+//   timeStart: string,
+//   timeEnd: string,
+//   studentIDs: string[],
+//   SLA: string,
+// ) {
+//   return {
+//     title,
+//     description,
+//     tags,
+//     importance,
+//     status,
+//     timeStart,
+//     timeEnd,
+//     studentIDs,
+//     SLA
+//   };
+// }
+
+export default function AllTasks() {
+  //const [data, setData] = React.useState(null)
+  //const [isLoading, setLoading] = React.useState(false)
+  // когда добавите таски в скл тогда и раскомментим
+  //React.useEffect(() => {
+  //    setLoading(true)
+  //    fetch('http://localhost:4000/api/tasks/getAll')
+  //    .then((res) => res.json())
+  //    .then((data) => {
+  //        setData(data)
+  //        setLoading(false)
+  //    })
+  // }, [])
+  const data: TaskDto[] = [{
+    title: "title",
+    description: "description",
+    tags: ["bug", "easy"],
+    importance: 2,
+    status: "solved",
+    timeStart: "11/22/2022",
+    timeEnd: "11/23/2022",
+    studentIDs: ["1", "2"],
+    dueDateBySLA: "2 hours",
+  }, {
+    title: "title2",
+    description: "description",
+    tags: ["bug", "hard"],
+    importance: 2,
+    status: "in process",
+    timeStart: "11/22/2022",
+    timeEnd: "11/23/2022",
+    studentIDs: ["1", "2"],
+    dueDateBySLA: "2 hours",
+  }]
+
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{minWidth: 650}} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Таск шапка</TableCell>
@@ -101,7 +90,7 @@ function AllTasks() {
           {data.map((taskDto) => (
             <TableRow
               key={taskDto.title}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              sx={{'&:last-child td, &:last-child th': {border: 0}}}
             >
               <TableCell component="th" scope="row">
                 {taskDto.title}
@@ -113,7 +102,7 @@ function AllTasks() {
               <TableCell align="right">{taskDto.timeStart}</TableCell>
               <TableCell align="right">{taskDto.timeEnd}</TableCell>
               <TableCell align="right">{taskDto.studentIDs.join(", ")}</TableCell>
-              <TableCell align="right">{taskDto.SLA}</TableCell>
+              <TableCell align="right">{taskDto.dueDateBySLA}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -121,5 +110,3 @@ function AllTasks() {
     </TableContainer>
   );
 }
-
-export default  AllTasks
