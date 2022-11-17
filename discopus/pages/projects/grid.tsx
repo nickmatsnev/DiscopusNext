@@ -3,6 +3,6 @@ import GridFilled from '../../components/GridFilled';
 
 export default function ProjectGrid() {
   return (
-           <GridFilled/>
+    <GridFilled/>
   );
 }
