@@ -13,7 +13,6 @@ import Link from 'next/link'
 import { Cookies } from 'react-cookie'
 
 import { handleAuth, register } from '../utils/auth'
-import axios from 'axios';
 
 enum UserRoleID {
   admin = 1,
@@ -62,6 +61,10 @@ export default class SignIn extends React.Component<MyProps, LoginState> {
       const response = await fetch('http://localhost:4000/api/users/login',{
         method:'POST',
         mode:'cors',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(objectDto)
       })
       const data = await response.json();
@@ -138,8 +141,8 @@ export default class SignIn extends React.Component<MyProps, LoginState> {
               >
                 Sign In
               </Button>
-                  <Link href="/auth/registeкUser">
-                    {"Нет аккаунта? Зарегестрируйтесь"}
+                  <Link href="/auth/registerUser">
+                    {"Нет аккаунта? Зарегистрируйтесь"}
                   </Link>
               <Link href="/" passHref>
               <Button

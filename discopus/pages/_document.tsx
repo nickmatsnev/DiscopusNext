@@ -23,8 +23,8 @@ export default class MyDocument extends Document {
           {(this.props as any).emotionStyleTags}
         </Head>
         <body>
-          
-    <Header /> 
+
+    <Header />
         <Box
       sx={{
         display: 'flex',
@@ -33,7 +33,7 @@ export default class MyDocument extends Document {
       }}
     >
       <CssBaseline />
-        
+
           <Main />
     </Box>
     <Footer />
