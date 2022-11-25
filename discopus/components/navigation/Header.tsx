@@ -12,7 +12,7 @@ import DiscopusLogo from '../DiscopusLogo';
 const Header = () => {
   return (
     <Container sx={{marginBottom:10}}>
-       <AppBar position="fixed" color="transparent" enableColorOnDark>
+       <AppBar position="fixed" color="inherit" enableColorOnDark>
         <Toolbar>            
           <DiscopusLogo/>
           <Image
