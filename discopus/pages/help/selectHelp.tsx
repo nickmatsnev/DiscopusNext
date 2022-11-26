@@ -14,8 +14,8 @@ export default function SimpleAccordion() {
        <Card sx={{
   alignItems:"center",
   justifyContent:"center"}} >
-      <CardContent >
-        <Typography  variant="h5" component="div">
+      <CardContent sx={{ mb: 5}}>
+        <Typography style={{textAlign: "center"}} variant="h5" component="div">
           Поддержка
         </Typography>
         
@@ -24,8 +24,8 @@ export default function SimpleAccordion() {
   alignItems:"center",
   justifyContent:"center"}} >
       <ButtonGroup variant="text" aria-label="outlined primary button group">
-      <Link href="/help/describeHelp" passHref><Button color="primary" sx={{minWidth:'50%'}}>написать сообщение</Button></Link>
-      <Link href="/help/answers" passHref><Button  color="primary" sx={{minWidth:'50%'}}>посмотреть ответы</Button></Link>
+      <Link href="/help/describeHelp" passHref><Button color="primary" sx={{minWidth:'50%'}}>Написать сообщение</Button></Link>
+      <Link href="/help/answers" passHref><Button  color="primary" sx={{minWidth:'50%'}}>Посмотреть ответы</Button></Link>
 </ButtonGroup>
       </CardActions>
     </Card>

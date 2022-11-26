@@ -5,7 +5,8 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Link from '../../components/navigation/Link';
-import EmptyTextarea from '../../components/EmptyTextarea';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
+
 
 
 export default function SimpleAccordion() {
@@ -15,8 +16,8 @@ export default function SimpleAccordion() {
                     justifyContent: "center"
                 }} >
                     <CardContent >
-                        <Typography variant="h5" component="div">
-                            Оставьте-с кляузу
+                        <Typography style={{textAlign: "center"}} variant="h5" component="div">
+                            Опишите вашу проблему
                         </Typography>
                         
                     </CardContent>
@@ -24,14 +25,19 @@ export default function SimpleAccordion() {
                         alignItems: "center",
                         justifyContent: "center"
                     }} >
-                        <EmptyTextarea/>
+                        <TextareaAutosize
+                            aria-label="problem"
+                            minRows={10}
+                            placeholder="Ваша проблема"
+                            style={{ width: 600 }}
+                        />
                     </CardActions>
                     
                     <CardActions sx={{
                         alignItems: "center",
                         justifyContent: "center"
                     }} >
-                       <Link href="/help/answers" passHref><Button color="secondary" sx={{ minWidth: '50%' }}>отправить</Button></Link>
+                       <Link href="/help/answers" passHref><Button color="primary" sx={{ minWidth: '50%' }}>Отправить</Button></Link>
                     </CardActions>
                 </Card>
     );
