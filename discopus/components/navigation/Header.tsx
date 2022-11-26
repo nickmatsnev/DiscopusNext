@@ -28,8 +28,12 @@ const Header = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
         <Link href="/about" passHref><Button color="inherit">О нас</Button></Link>
         <Link href="/help/selectHelp" passHref><Button color="inherit">Помощь</Button></Link>
-        <Link href="/projects/grid" passHref><Button color="inherit">грид</Button></Link>
-        <Link href="/projects/table" passHref><Button color="inherit">таблица</Button></Link>
+        <Link href="/projects/grid" passHref><Button color="inherit">грид проектов</Button></Link>
+        <Link href="/projects/table" passHref><Button color="inherit">таблица проектов</Button></Link>
+        <Link href="/tasks/all" passHref><Button color="inherit">таски</Button></Link>
+        <Link href="/unis/all" passHref><Button color="inherit">универы</Button></Link>
+        <Link href="/companies/all" passHref><Button color="inherit">компании</Button></Link>
+       
           </Typography>
         <Link href="/auth/login" passHref><Button color="inherit">Логин</Button></Link>
         <Link href="/auth/registerUser" passHref><Button color="inherit">Регистрация</Button></Link>
