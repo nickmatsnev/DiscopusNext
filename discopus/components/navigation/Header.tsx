@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import AppBar from '@mui/material/AppBar';
 import Image from 'next/image';
 import DiscopusLogo from '../DiscopusLogo';
-
+import mypic from './logo.png'
 const Header = () => {
   return (
     <Container sx={{marginBottom:10}}>
@@ -16,7 +16,8 @@ const Header = () => {
         <Toolbar>            
           <DiscopusLogo/>
           <Image
-        src="/logo.png"
+         src={mypic}
+         alt="Picture of the author"
         layout="fixed"
         height={50}
         width={50}

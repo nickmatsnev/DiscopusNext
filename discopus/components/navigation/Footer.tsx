@@ -27,6 +27,9 @@ const Footer = () => {
         sx={{
           py: 2,
           px: 2,
+          width:'100%',
+          position:"absolute",
+          bottom:0,
           backgroundColor: (theme) =>
             theme.palette.mode === 'light'
               ? theme.palette.grey[200]
