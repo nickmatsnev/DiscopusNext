@@ -1,11 +1,12 @@
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {
+  Table,
+  TableContainer,
+  Thead,
+  Tr,
+  Td,
+  Tbody,
+} from '@chakra-ui/react'
 import {TaskDto} from "./DTO";
 
 
@@ -70,42 +71,42 @@ export default function AllTasks() {
 
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer  mt={"100px"}>
       <Table sx={{minWidth: 650}} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Таск шапка</TableCell>
-            <TableCell align="right">Описание</TableCell>
-            <TableCell align="right">Сложность</TableCell>
-            <TableCell align="right">Теги</TableCell>
-            <TableCell align="right">Важность</TableCell>
-            <TableCell align="right">Статус</TableCell>
-            <TableCell align="right">Время начала</TableCell>
-            <TableCell align="right">Время конца</TableCell>
-            <TableCell align="right">Айди студентов</TableCell>
-            <TableCell align="right">СЛА</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
+        <Thead>
+          <Tr>
+            <Td>Таск шапка</Td>
+            <Td align="right">Описание</Td>
+            <Td align="right">Сложность</Td>
+            <Td align="right">Теги</Td>
+            <Td align="right">Важность</Td>
+            <Td align="right">Статус</Td>
+            <Td align="right">Время начала</Td>
+            <Td align="right">Время конца</Td>
+            <Td align="right">Айди студентов</Td>
+            <Td align="right">СЛА</Td>
+          </Tr>
+        </Thead>
+        <Tbody>
           {data.map((taskDto) => (
-            <TableRow
+            <Tr
               key={taskDto.title}
               sx={{'&:last-child td, &:last-child th': {border: 0}}}
             >
-              <TableCell component="th" scope="row">
+              <Td scope="row">
                 {taskDto.title}
-              </TableCell>
-              <TableCell align="right">{taskDto.description}</TableCell>
-              <TableCell align="right">{taskDto.tags.join(", ")}</TableCell>
-              <TableCell align="right">{taskDto.importance}</TableCell>
-              <TableCell align="right">{taskDto.status}</TableCell>
-              <TableCell align="right">{taskDto.timeStart}</TableCell>
-              <TableCell align="right">{taskDto.timeEnd}</TableCell>
-              <TableCell align="right">{taskDto.studentIDs.join(", ")}</TableCell>
-              <TableCell align="right">{taskDto.dueDateBySLA}</TableCell>
-            </TableRow>
+              </Td>
+              <Td align="right">{taskDto.description}</Td>
+              <Td align="right">{taskDto.tags.join(", ")}</Td>
+              <Td align="right">{taskDto.importance}</Td>
+              <Td align="right">{taskDto.status}</Td>
+              <Td align="right">{taskDto.timeStart}</Td>
+              <Td align="right">{taskDto.timeEnd}</Td>
+              <Td align="right">{taskDto.studentIDs.join(", ")}</Td>
+              <Td align="right">{taskDto.dueDateBySLA}</Td>
+            </Tr>
           ))}
-        </TableBody>
+        </Tbody>
       </Table>
     </TableContainer>
   );

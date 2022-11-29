@@ -5,7 +5,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
-import Header from '../components/navigation/Header';
+import NavBar from '../components/navigation/Header';
 import { Box } from '@mui/material';
 import Footer from '../components/navigation/Footer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -24,7 +24,7 @@ export default class MyDocument extends Document {
         </Head>
         <body>
 
-    <Header />
+    <NavBar />
         <Box
       sx={{
         display: 'flex',

@@ -1,11 +1,12 @@
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {
+  Table,
+  TableContainer,
+  Thead,
+  Tr,
+  Td,
+  Tbody,
+} from '@chakra-ui/react'
 import {CompanyDto} from "./DTO";
 
 
@@ -70,54 +71,54 @@ export default function AllTasks() {
 
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer mt={"100px"}>
       <Table sx={{minWidth: 650}} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Компания шапка</TableCell>
-            <TableCell align="right">Название</TableCell>
-            <TableCell align="right">Теги</TableCell>
-            <TableCell align="right">Описание</TableCell>
-            <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Номер телефона</TableCell>
-            <TableCell align="right">Адрес</TableCell>
-            <TableCell align="right">Город</TableCell>
-            <TableCell align="right">Страна</TableCell>
-            <TableCell align="right">zip код</TableCell>
-            <TableCell align="right">linkedin</TableCell>
-            <TableCell align="right">facebook</TableCell>
-            <TableCell align="right">twitter</TableCell>
-            <TableCell align="right">youtube</TableCell>
-            <TableCell align="right">instagram</TableCell>
-            <TableCell align="right">website</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
+        <Thead>
+          <Tr>
+            <Td>Компания шапка</Td>
+            <Td align="right">Название</Td>
+            <Td align="right">Теги</Td>
+            <Td align="right">Описание</Td>
+            <Td align="right">Email</Td>
+            <Td align="right">Номер телефона</Td>
+            <Td align="right">Адрес</Td>
+            <Td align="right">Город</Td>
+            <Td align="right">Страна</Td>
+            <Td align="right">zip код</Td>
+            <Td align="right">linkedin</Td>
+            <Td align="right">facebook</Td>
+            <Td align="right">twitter</Td>
+            <Td align="right">youtube</Td>
+            <Td align="right">instagram</Td>
+            <Td align="right">website</Td>
+          </Tr>
+        </Thead>
+        <Tbody>
           {data.map((CompanyDto) => (
-            <TableRow
+            <Tr
               key={CompanyDto.name}
               sx={{'&:last-child td, &:last-child th': {border: 0}}}
             >
-              <TableCell component="th" scope="row">
+              <Td scope="row">
                 {CompanyDto.name}
-              </TableCell>
-              <TableCell align="right">{CompanyDto.tags.join(", ")}</TableCell>
-              <TableCell align="right">{CompanyDto.cv_desc}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.email}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.phone}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.address}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.city}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.country}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.zip}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.social_media?.linkedin}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.social_media?.facebook}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.social_media?.twitter}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.social_media?.youtube}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.social_media?.instagram}</TableCell>
-              <TableCell align="right">{CompanyDto.contacts.social_media?.website}</TableCell>
-            </TableRow>
+              </Td>
+              <Td align="right">{CompanyDto.tags.join(", ")}</Td>
+              <Td align="right">{CompanyDto.cv_desc}</Td>
+              <Td align="right">{CompanyDto.contacts.email}</Td>
+              <Td align="right">{CompanyDto.contacts.phone}</Td>
+              <Td align="right">{CompanyDto.contacts.address}</Td>
+              <Td align="right">{CompanyDto.contacts.city}</Td>
+              <Td align="right">{CompanyDto.contacts.country}</Td>
+              <Td align="right">{CompanyDto.contacts.zip}</Td>
+              <Td align="right">{CompanyDto.contacts.social_media?.linkedin}</Td>
+              <Td align="right">{CompanyDto.contacts.social_media?.facebook}</Td>
+              <Td align="right">{CompanyDto.contacts.social_media?.twitter}</Td>
+              <Td align="right">{CompanyDto.contacts.social_media?.youtube}</Td>
+              <Td align="right">{CompanyDto.contacts.social_media?.instagram}</Td>
+              <Td align="right">{CompanyDto.contacts.social_media?.website}</Td>
+            </Tr>
           ))}
-        </TableBody>
+        </Tbody>
       </Table>
     </TableContainer>
   );

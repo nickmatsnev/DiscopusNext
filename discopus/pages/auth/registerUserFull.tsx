@@ -99,14 +99,14 @@ export default function SignUpFull() {
               autoComplete="teacherName"
             />       
                <TextField
-          id="outlined-multiline-flexible"
-          label="Резюме опиши"
-          multiline
-          fullWidth
-          maxRows={4}
-          name="curriculumVitae"
-          autoComplete="curriculumVitae"
-        />
+                id="outlined-multiline-flexible"
+                label="Резюме опиши"
+                multiline
+                fullWidth
+                maxRows={4}
+                name="curriculumVitae"
+                autoComplete="curriculumVitae"
+              />
          
             <Button
               type="submit"

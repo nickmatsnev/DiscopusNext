@@ -1,18 +1,15 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Link from 'next/link'
 import { Cookies } from 'react-cookie'
-
 import { handleAuth, register } from '../utils/auth'
+import {
+  Button,
+  Flex,
+  Heading,
+  Input,
+  Text,
+  Link
+} from "@chakra-ui/react";
+import { useState } from "react";
 
 enum UserRoleID {
   admin = 1,
@@ -31,8 +28,6 @@ interface LoginState{
   //password: string
 }
 
-const theme = createTheme();
-
 const cookies = new Cookies();
 
 export default class SignIn extends React.Component<MyProps, LoginState> {
@@ -47,12 +42,14 @@ export default class SignIn extends React.Component<MyProps, LoginState> {
 
   onInputChange = (e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => { // should be Event 
     this.setState({...this.state, [e.currentTarget.name ] : e.currentTarget.value})
+    console.log(e.currentTarget.name)
   }
-  onLoginClick = async(e:React.FormEvent<HTMLFormElement>) => {
+  onLoginClick = async(e:React.FormEvent<HTMLDivElement>) => {
     e.preventDefault()
     try {
       const objectDto: MyProps = { 
-        email: this.state.email}
+        email: this.state.email
+      }
 
 
       console.log(objectDto)
@@ -87,80 +84,47 @@ export default class SignIn extends React.Component<MyProps, LoginState> {
 
   }
   render(): React.ReactNode {
-    return (
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              D
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            {!this.state.token && (<Box component="form" onSubmit={this.onLoginClick} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Электронная почта"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Пароль"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e)}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Запомнить меня"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                color="primary"
-              >
-                Sign In
-              </Button>
-                  <Link href="/auth/registerUser">
-                    {"Нет аккаунта? Зарегистрируйтесь"}
-                  </Link>
-              <Link href="/" passHref>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                color="secondary"
-              >
-                Go back
-              </Button>
-              </Link>
-            </Box>)}
-          </Box>
-          <Box sx={{ mt: 8, mb: 8 }}>
-          </Box>
-        </Container>
-      </ThemeProvider>
-    );
-  }
+       return (
+
+        <Flex height={"100vh"} alignItems={"center"} justifyContent={"center"}>
+        <Flex
+          direction={"column"}
+          background={"gray.200"}
+          p={12}
+          rounded={6}
+          position={"relative"}
+        >
+
+          <Heading mb={6}>Вход</Heading>
+
+          <Text fontSize='md' mb={3} >Ваша электронная почта:</Text>
+          <Input
+            placeholder="Email"
+            variant={"filled"}
+            mb={3}
+            type="email"
+            name="email"
+            onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e)}
+          />
+  
+          <Text fontSize='md' mb={3} >Ваш пароль:</Text>
+          <Input
+            placeholder="*************"
+            variant={"filled"}
+            mb={6}
+            type="password"
+            name="password"
+            onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e)}
+          />
+  
+          <Button colorScheme={"teal"} type="submit" onClick={this.onLoginClick}>Войти</Button>
+
+          <Link color='teal.500' href="/auth/registerUser">
+            {"Нет аккаунта? Зарегистрируйтесь"}
+          </Link>
+        </Flex>
+      </Flex>
+
+        );
+       }
 }

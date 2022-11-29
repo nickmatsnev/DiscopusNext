@@ -1,41 +1,50 @@
 import * as React from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {  Container } from '@mui/material';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Box
+} from '@chakra-ui/react'
+
 export default function SimpleAccordion() {
   return (
-  <Container>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Ответ 1</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Проблема была в том, что куда-то пропали 1,5 млн хороших скриптов
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Ответ 2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Проблема была в том, что куда-то пропали 1,5 млн хороших скриптов   
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      </Container>
+  
+    <Accordion mt={"100px"} defaultIndex={[0]} allowMultiple>
+      <AccordionItem>
+        <h2>
+          <AccordionButton>
+            <Box flex='1' textAlign='left'>
+            Ответ 1
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+        </h2>
+        <AccordionPanel pb={4}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+          commodo consequat.
+        </AccordionPanel>
+      </AccordionItem>
+
+      <AccordionItem>
+        <h2>
+          <AccordionButton>
+            <Box flex='1' textAlign='left'>
+            Ответ 2
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+        </h2>
+        <AccordionPanel pb={4}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+          commodo consequat.
+        </AccordionPanel>
+      </AccordionItem>
+    </Accordion>
   );
 }

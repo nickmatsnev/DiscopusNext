@@ -1,11 +1,12 @@
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {
+  Table,
+  TableContainer,
+  Thead,
+  Tr,
+  Td,
+  Tbody,
+} from '@chakra-ui/react'
 
 type University = {
 uuid: number,
@@ -29,29 +30,29 @@ export default function Unis() {
   const initUni: University = {uuid:1,name:"noname"}
   const rows: Array<University> = (data == null ? [initUni] : data);
   return (
-    <TableContainer component={Paper}>
+    <TableContainer mt={"100px"}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Номер</TableCell>
-            <TableCell align="right">ЮЮИД</TableCell>
-            <TableCell align="right">Название университета</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
+        <Thead>
+          <Tr>
+            <Td>Номер</Td>
+            <Td align="right">ЮЮИД</Td>
+            <Td align="right">Название университета</Td>
+          </Tr>
+        </Thead>
+        <Tbody>
           {rows.map((row) => (
-            <TableRow
+            <Tr
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <Td scope="row">
                 {row.name}
-              </TableCell>
-              <TableCell align="right">{row.uuid}</TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-            </TableRow>
+              </Td>
+              <Td align="right">{row.uuid}</Td>
+              <Td align="right">{row.name}</Td>
+            </Tr>
           ))}
-        </TableBody>
+        </Tbody>
       </Table>
     </TableContainer>
   );
