@@ -9,9 +9,11 @@ import Header from '../components/navigation/Header';
 import { Box } from '@mui/material';
 import Footer from '../components/navigation/Footer';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/system';
 export default class MyDocument extends Document {
   render() {
     return (
+      <ThemeProvider theme={theme}>
       <Html lang="en">
         <Head>
           <meta name="theme-color" content={theme.palette.primary.main} />
@@ -30,6 +32,7 @@ export default class MyDocument extends Document {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '90vh',
+        fontFamily: 'ThunderFont',
       }}
     >
       <CssBaseline />
@@ -40,6 +43,7 @@ export default class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
+      </ThemeProvider>
     );
   }
 }

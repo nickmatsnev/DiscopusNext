@@ -3,12 +3,11 @@ import * as React from 'react';
 import type { NextPage } from 'next';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-
 import { handleAuth } from './utils/auth'
 
-const Home: NextPage = (res: any) => {
+function Home(email:string) {
 
-  
+   
   //  /**  <Header />  We would pass the type of the user to show different */
   // we need to put header, footer and the forming container in the _document to make it similar for everything
   return (
@@ -18,7 +17,7 @@ const Home: NextPage = (res: any) => {
         Discopus
         </Typography>
         <Typography variant="h3" component="h2" gutterBottom>
-        Hello,  
+        Hello, {email}
         </Typography>
 
         <Typography variant="h5" component="h2" gutterBottom>
