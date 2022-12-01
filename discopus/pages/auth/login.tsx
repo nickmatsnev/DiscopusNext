@@ -117,7 +117,7 @@ export default class SignIn extends React.Component<MyProps, LoginState> {
             onChange={(e:React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => this.onInputChange(e)}
           />
   
-          <Button colorScheme={"teal"} type="submit" onClick={this.onLoginClick}>Войти</Button>
+          <Button colorScheme={"teal"} type="submit" onClick={this.onLoginClick}>Войти</Button> // TODO FIX BUTTON ONCLICK
 
           <Link color='teal.500' href="/auth/registerUser">
             {"Нет аккаунта? Зарегистрируйтесь"}

@@ -16,86 +16,10 @@ const Header = () => {
 
   return (
 
-    <Flex>
-      <Flex>
-      
-        <NextLink href="/about" passHref>
-          <Button
-          as="a"
-          variant="link"
-          my={5}
-          w="100%">
-            О нас
-          </Button>
-        </NextLink>
+    <Button variant="link" color='teal.500'>
+    О нас
+    </Button>
 
-        <NextLink href="/help/selectHelp" passHref>
-          <Button
-          as="a"
-          variant="link"
-          my={5}
-          w="100%">
-            Помощь
-          </Button>
-        </NextLink>
-
-        {/* <NextLink href="/projects/grid" passHref>
-          <Button
-          as="a"
-          variant="ghost"
-          aria-label="Home"
-          my={5}
-          w="100%">
-            О нас
-          </Button>
-        </NextLink> */}
-
-        <NextLink href="/projects/table" passHref>
-          <Button
-          as="a"
-          variant="link"
-          aria-label="Home"
-          my={5}
-          w="100%">
-            Таблица проектов
-          </Button>
-        </NextLink>
-
-        <NextLink href="/tasks/all" passHref>
-          <Button
-          as="a"
-          variant="link"
-          aria-label="Home"
-          my={5}
-          w="100%">
-            Задачи
-          </Button>
-        </NextLink>
-
-        <NextLink href="/unis/all" passHref>
-          <Button
-          as="a"
-          variant="link"
-          aria-label="Home"
-          my={5}
-          w="100%">
-            Университеты
-          </Button>
-        </NextLink>
-
-        <NextLink href="/companies/all" passHref>
-          <Button
-          as="a"
-          variant="link"
-          aria-label="Home"
-          my={5}
-          w="100%">
-            Компании
-          </Button>
-        </NextLink>
-
-      </Flex>
-    </Flex>
 
 
     // <Container sx={{marginBottom:10}}>
